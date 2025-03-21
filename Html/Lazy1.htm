@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+
+<body>
+    <img src="http://localhost:3000/images/Frontend.png" alt="Lazy Loaded Image" loading="lazy">
+    <script>
+        const img = document.querySelector('img');
+        img.onload = function () {
+            console.log('Image loaded');
+        };
+        img.onerror = function () {
+            console.error('Image failed to load');
+        };
+    </script>
+</body>
+</html>

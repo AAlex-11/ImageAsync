@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Load Image with XMLHttpRequest</title>
+</head>
+<body>
+  <div id="image-container">
+    <!-- The image will be inserted here -->
+  </div>
+
+  <script>
+    // URL of the image to load
+    const imageUrl = 'http://localhost:3000/images/Frontend.png';
+
+    // Create a new XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+
+    // Configure the request
+    xhr.open('GET', imageUrl, true);
+    xhr.responseType = 'blob'; // We expect the response to be a binary blob (image)
+
+    // Define what happens when the request completes
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        // Create a Blob from the response
+        const blob = xhr.response;
+
+        // Create an object URL for the Blob
+        const imageUrl = URL.createObjectURL(blob);
+
+        // Create an <img> element and set its src to the object URL
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = 'Loaded Image';
+
+        // Append the image to the container
+        const container = document.getElementById('image-container');
+        container.appendChild(img);
+
+        // Clean up the object URL when the image is loaded
+        img.onload = function () {
+          URL.revokeObjectURL(imageUrl);
+        };
+      } else {
+        console.error('Failed to load image. Status:', xhr.status);
+      }
+    };
+
+    // Define what happens if there's an error
+    xhr.onerror = function () {
+      console.error('An error occurred while loading the image.');
+    };
+
+    // Send the request
+    xhr.send();
+  </script>
+</body>
+</html>

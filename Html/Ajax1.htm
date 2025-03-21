@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Image with jQuery AJAX</title>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div id="image-container">
+    <!-- The image will be inserted here -->
+</div>
+
+<script>
+    // URL of the image to load
+    const imageUrl = 'http://localhost:3000/images/Frontend.png';
+
+    // Use jQuery AJAX to load the image
+    $.ajax({
+        url: imageUrl,
+        method: 'GET',
+        xhrFields: {
+            responseType: 'blob' // Set the response type to Blob
+        },
+        success: function (blob) {
+            // Create an object URL for the Blob
+            const imageUrl = URL.createObjectURL(blob);
+
+            // Create an <img> element and set its src to the object URL
+            const img = $('<img>', {
+                src: imageUrl,
+                alt: 'Loaded Image'
+            });
+
+            // Append the image to the container
+            $('#image-container').append(img);
+
+            // Clean up the object URL when the image is loaded
+            img.on('load', function () {
+                URL.revokeObjectURL(imageUrl);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error('Error loading image:', error);
+        }
+    });
+</script>
+</body>
+</html>

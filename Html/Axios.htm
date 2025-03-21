@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Image with Axios</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="image-container">
+    <!-- The image will be inserted here -->
+</div>
+
+<script>
+    // URL of the image to load
+    const imageUrl = 'http://localhost:3000/images/Frontend.png';
+
+    // Use Axios to load the image
+    axios.get(imageUrl, { responseType: 'blob' })
+        .then(response => {
+            // Create an object URL for the Blob
+            const imageUrl = URL.createObjectURL(response.data);
+
+            // Create an <img> element and set its src to the object URL
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = 'Loaded Image';
+
+            // Append the image to the container
+            const container = document.getElementById('image-container');
+            container.appendChild(img);
+
+            // Clean up the object URL when the image is loaded
+            img.onload = function () {
+                URL.revokeObjectURL(imageUrl);
+            };
+        })
+        .catch(error => {
+            console.error('Error loading image:', error);
+        });
+</script>
+</body>
+</html>
