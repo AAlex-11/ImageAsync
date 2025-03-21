@@ -1,0 +1,11 @@
+<div *ngIf="imageUrl$ | async as imageUrl; else loading">
+  <img [src]="imageUrl" alt="Loaded Image">
+  <p>Image loaded successfully!</p>
+</div>
+<ng-template #loading>
+  <div class="spinner"></div>
+</ng-template>
+<div *ngIf="errorMessage">
+  <p style="color: red;">{{ errorMessage }}</p>
+</div>
+<button (click)="loadImage()">Refresh Image</button>

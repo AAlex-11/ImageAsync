@@ -1,0 +1,11 @@
+.image-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Optional: Add spacing between components */
+}
+
+app-image-loader {
+  display: block;
+  height: 100px; /* Restrict height to 100px */
+  overflow: hidden; /* Ensure content doesn't overflow */
+}
